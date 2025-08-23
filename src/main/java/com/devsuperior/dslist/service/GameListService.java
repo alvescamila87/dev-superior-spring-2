@@ -15,9 +15,19 @@ public class GameListService {
     @Autowired
     private GameListRepository repository;
 
+    @Autowired
+    private GameRepository gameRepository;
+
     @Transactional(readOnly = true)
     public List<GameListDTO> findAll() {
        List<GameList> result = repository.findAll();
        return result.stream().map(GameListDTO::new).toList();
+    }
+
+    public void move(Long listId, int soucerIndex, int destinationIndex) {
+        List<GameMinProjection> list = gameRepository.searchByList(listId);
+
+        GameMinProjection obj = list.remove(soucerIndex);
+        list.add((destinationIndex, obj);
     }
 }
