@@ -2,6 +2,7 @@ package com.devsuperior.dslist.controllers;
 
 import com.devsuperior.dslist.dto.GameListDTO;
 import com.devsuperior.dslist.dto.GameMinDTO;
+import com.devsuperior.dslist.dto.ReplacementDTO;
 import com.devsuperior.dslist.service.GameListService;
 import com.devsuperior.dslist.service.GameService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,18 +18,23 @@ import java.util.List;
 public class GameListController {
 
     @Autowired
-    private GameListService service;
+    private GameListService gameListService;
 
     @Autowired
     private GameService gameService;
 
     @GetMapping
     public List<GameListDTO> findAll() {
-        return service.findAll();
+        return gameListService.findAll();
     }
 
     @GetMapping("/{listId}/games")
     public List<GameMinDTO> findByList(@PathVariable Long listId) {
         return gameService.findByList(listId);
+    }
+
+    @PostMapping("/{listId}/replacement")
+    public void move(@PathVariable Long listId, @RequestBody ReplacementDTO body) {
+        return gameService.move(listId, body.getSourceIndex(), body.getDestinationIndex());
     }
 }

@@ -16,16 +16,16 @@ import java.util.List;
 public class GameController {
 
     @Autowired
-    private GameService service;
+    private GameService gameService;
 
     @GetMapping
     public List<GameMinDTO> findAll() {
-        List<GameMinDTO> dto = service.findAll();
+        List<GameMinDTO> dto = gameService.findAll();
         return dto;
     }
 
     @GetMapping("/{id}")
     public GameDTO findById(@PathVariable Long id) {
-        return service.findById(id);
+        return gameService.findById(id);
     }
 }
